@@ -1,3 +1,5 @@
+//This structures the dictionary into an array for easy lookup with syllables
+
 var fs = require("fs");
 var cmudictFile = readCmudictFile('./cmudict.txt');
 var library = formatData(cmudictFile);
@@ -14,16 +16,12 @@ function formatData(data){
   var library = [];
 
     lines = lines.splice(0,lines.length-1);
-    lines.forEach(function(line){    
-    lineSplit = line.split("  "); 
-    
-    syllables = syllableCount(lineSplit[1]);
-
-    library = createLibrary(library, lineSplit[0], syllables);
-  
-    //console.log("The word " + lineSplit[0] + " has this phoneme    layout: " + lineSplit[1]); 
-
+      lines.forEach(function(line){    
+      lineSplit = line.split("  "); 
+      syllables = syllableCount(lineSplit[1]);
+      library = createLibrary(lineSplit[0], syllables, library);
   });  
+    //console.log(library)
     return library;
 }
 
@@ -34,28 +32,11 @@ function syllableCount(arr){
   return count;
 }
 
-function createLibrary(library, word, syllable){ 
+function createLibrary(word, syllable, library){ 
 
   library[syllable] ? library[syllable].push(word) : library[syllable] = [];
-  //console.log(syllableArr)
+  
   return library;
-
 }
 
 module.exports = library;
-
-// var fs = require ('fs');
-
-// //console.log( fs );
-// //console.log(module);
-// function createHaiku(structure){
-//     console.log("this should log a haiku with the structure " + structure);
-// }
-// module.exports = {
-//   createHaiku: createHaiku
-// };
-
-
-
-
-
