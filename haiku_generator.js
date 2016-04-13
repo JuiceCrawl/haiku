@@ -1,6 +1,6 @@
 var library = require('./haiku');
 
-var structure = [[5],[7],[5]];
+var structure = [[2,3],[3,2,2],[1,4]];
 
 console.log(createHaiku(structure, library))
 
