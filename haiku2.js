@@ -21,7 +21,7 @@ function formatData(data){
       syllables = syllableCount(lineSplit[1]);
       return createLibrary(lineSplit[0], syllables, libraryObj);
   });  
-    console.log(libraryObj)
+    
     return libraryObj;
 }
 
