@@ -24,9 +24,9 @@ function formatData(data){
   return arr;
 }
 
-function checkForHaiku(arr){
-  //var randomNum = Math.floor(Math.random() * arr.length);
-  var randomNum = 0;
+function checkForHaiku(arr, randomNum){
+  var randomNum = randomNum || Math.floor(Math.random() * arr.length) ;
+  //var randomNum = 0;
   var goal = [5,7,5];
   var word = arr[randomNum];
   var haikuList = [];
@@ -55,6 +55,5 @@ function checkForHaiku(arr){
     //if === 0 then just moves to next indice automatically
     haikuList.push('\n');
   }
-  console.log(haikuList.join(" "))
   return haikuList.join(" ");
 }
