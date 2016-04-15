@@ -3,16 +3,16 @@ var library = require('./haiku2'); //uses the library in Object form
 var book = fs.readFileSync('./WizardOfOz.txt').toString();
 
 var bookArray = formatData(book);
-var haikus = checkForHaiku(bookArray)
+var haikus = checkForHaiku(bookArray, 1000)
 console.log(haikus)
 
-function formatData(data){    
+function formatData(data){
   var words = data.toString().split("\r").join(' ').split("\n").join(' ').split(' ');
   var arr = [],
     count = 0,
     syllable;
-    
-  words.forEach(function(word){ 
+
+  words.forEach(function(word){
     if(word !== "" && word !== undefined){
       word = word.replace(/\W/g, ''); //remove punctuation at end only, but isn't actually removing anything
       syllable = library[word.toUpperCase()] //shows undefined for some words
@@ -24,18 +24,19 @@ function formatData(data){
   return arr;
 }
 
-function checkForHaiku(arr){
-  //var randomNum = Math.floor(Math.random() * arr.length);
-  var randomNum = 0;
+function checkForHaiku(arr, randomNum){ //We need to pass in randomNum here so that we don't start at 0
+  //var randomNum = Math.floor(Math.random() * arr.length); //We can pass this in the first time we call instead
+  //var randomNum = 0; Everytime this was called, you were starting at 0. So if there wasn't a haiku on the fisrt like
+  //you would just loop over and over and hit the max.
   var goal = [5,7,5];
   var word = arr[randomNum];
   var haikuList = [];
   var syllable;
-  
+
   for(var i = 0; i < goal.length; i++){
     syllable = library[word.toUpperCase()];
     goal[i] -= syllable;
-    
+
     while(goal[i] > 0){
       haikuList.push(word);
       randomNum++
@@ -46,12 +47,12 @@ function checkForHaiku(arr){
           haikuList.push(word);
         }
     }
-    
+
     if(goal[i] < 0){
-      checkForHaiku(arr);
+      checkForHaiku(arr, randomNum+1000); //You would change randomNum here for the next call
     }
-    randomNum++
-    word = arr[randomNum];
+
+    //word = arr[randomNum];
     //if === 0 then just moves to next indice automatically
     haikuList.push('\n');
   }
